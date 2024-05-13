@@ -1,14 +1,12 @@
 import json
 import networkx as nx
-
+import itertools
 # Q1
 def json_vers_nx(chemin):
     graph = nx.Graph()
     with open(chemin, "r") as file:
         for ligne in file:
-            ligne = json.loads(file.readline())
-            for acteur in ligne["cast"]:
-                for acteur2 in ligne["cast"]:
-                    if acteur != acteur2:
-                        graph.add_edge(acteur, acteur2)
+            acteurs = json.loads(ligne)["cast"]
+            acteurs = [acteur.strip("[").strip("]") for acteur in acteurs]
+            graph.add_edges_from(itertools.combinations(acteurs, 2))
     return graph

@@ -10,3 +10,10 @@ def json_vers_nx(chemin):
     return graph
 
 # Q2
+# Temps inférieur à 0.05 secondes
+def collaborateurs_communs(graph, acteur1, acteur2):
+    commun = []
+    for v in list(graph.adj[acteur2]):
+        if v in list(graph.adj[acteur1]):
+            commun.append(v)
+    return commun

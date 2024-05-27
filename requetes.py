@@ -32,27 +32,40 @@ def collaborateurs_proches(G,u,k):
         return None
     collaborateurs = set()
     collaborateurs.add(u)
-    for i in range(k):
+    for i in range(k): # O(N**4)
         collaborateurs_directs = set()
-        for c in collaborateurs:
-            for voisin in G.adj[c]:
-                if voisin not in collaborateurs:
+        for c in collaborateurs: # O(N**3)
+            for voisin in G.adj[c]: # O(N**2)
+                if voisin not in collaborateurs: # O(N)
                     collaborateurs_directs.add(voisin)
         collaborateurs = collaborateurs.union(collaborateurs_directs)
     return collaborateurs
 # On reconnait un algorithme de parcours DFS car on parcours l'ensemble des sommets voisins d'une distance inférieur à k.
 
 def est_proche(G,u,v,k=1):
-    return v in collaborateurs_proches(G,u,k)
+    return v in collaborateurs_proches(G,u,k) # O(N**5)
 
-def distance_naive(G,u,v):
-    for k in range(nx.number_of_nodes(G)):
+def distance_naive(G,u,v): # O(N**6)
+    for k in range(nx.number_of_nodes(G)): # O(N**6)
         if est_proche(G,u,v,k=1):
             return k
     return None
 
-def distance(G,u,v):
-    return None
+def distance(G,u,v): # O(N**4)
+    if u not in G.nodes:
+        print(u,"est un illustre inconnu")
+        return None
+    collaborateurs = set()
+    collaborateurs.add(u)
+    for k in range(nx.number_of_nodes(G)): # O(N**4)
+        collaborateurs_directs = set()
+        for c in collaborateurs: # O(N**3)
+            for voisin in G.adj[c]: # O(N**2)
+                if voisin not in collaborateurs: # O(N)
+                    collaborateurs_directs.add(voisin)
+        collaborateurs = collaborateurs.union(collaborateurs_directs)
+        if v in collaborateurs:
+            return k
 # Q4
 def centralite(G,u):
     return None

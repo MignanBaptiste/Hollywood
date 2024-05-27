@@ -11,9 +11,57 @@ def json_vers_nx(chemin):
 
 # Q2
 # Temps inférieur à 0.05 secondes
-def collaborateurs_communs(graph, acteur1, acteur2):
-    commun = []
-    for v in list(graph.adj[acteur2]):
-        if v in list(graph.adj[acteur1]):
-            commun.append(v)
+def collaborateurs_communs(graph, u, v):
+    commun = set()
+    for v in set(graph.adj[acteur2]):
+        if v in set(graph.adj[acteur1]):
+            commun.add(v)
     return commun
+
+#Q3
+def collaborateurs_proches(G,u,k):
+    """Fonction renvoyant l'ensemble des acteurs à distance au plus k de l'acteur u dans le graphe G. La fonction renvoie None si u est absent du graphe.
+    
+    Parametres:
+        G: le graphe
+        u: le sommet de départ
+        k: la distance depuis u
+    """
+    if u not in G.nodes:
+        print(u,"est un illustre inconnu")
+        return None
+    collaborateurs = set()
+    collaborateurs.add(u)
+    for i in range(k):
+        collaborateurs_directs = set()
+        for c in collaborateurs:
+            for voisin in G.adj[c]:
+                if voisin not in collaborateurs:
+                    collaborateurs_directs.add(voisin)
+        collaborateurs = collaborateurs.union(collaborateurs_directs)
+    return collaborateurs
+# On reconnait un algorithme de parcours DFS car on parcours l'ensemble des sommets voisins d'une distance inférieur à k.
+
+def est_proche(G,u,v,k=1):
+    return v in collaborateurs_proches(G,u,k)
+
+def distance_naive(G,u,v):
+    for k in range(nx.number_of_nodes(G)):
+        if est_proche(G,u,v,k=1):
+            return k
+    return None
+
+def distance(G,u,v):
+    return None
+# Q4
+def centralite(G,u):
+    return None
+def centre_hollywood(G):
+    return None
+# Q5
+5
+def eloignement_max(G:nx.Graph):
+    return None
+# Bonus
+def centralite_groupe(G,S):
+    return None

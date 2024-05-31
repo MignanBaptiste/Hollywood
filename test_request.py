@@ -24,7 +24,7 @@ G = r.json_vers_nx("./data.txt")
     # print(time.time()-t)
 
 # Q3
-nb = 100
+nb = 10
 temps_total1 = 0
 temps_total2 = 0
 for i in range(nb):
@@ -35,7 +35,7 @@ for i in range(nb):
     print((k, t2))
     temps_total1 += t2
     t = time.time()
-    k = r.distance2(G, "Al Pacino", act1)
+    k = r.distance3(G, "Al Pacino", act1)
     t2 = time.time()-t
     print((k, t2))
     temps_total2 += t2

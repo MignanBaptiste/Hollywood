@@ -69,6 +69,7 @@ def distance(G,u,v): # O(N**4)
         collaborateurs = collaborateurs.union(collaborateurs_directs)
         if v in collaborateurs:
             return k + 1
+
 def distance2(G,u,v): # O(N**4)
     if u not in G.nodes:
         return None
@@ -84,6 +85,13 @@ def distance2(G,u,v): # O(N**4)
                     collaborateurs_directs.add(voisin)
         collaborateurs = collaborateurs.union(collaborateurs_directs)
     return distance
+
+def distance3(G, u, v):
+    try:
+        return nx.shortest_path_length(G, u, v)
+    except nx.NetworkXNoPath:
+        return None
+
 # Q4
 def centralite(G,u):
     return None

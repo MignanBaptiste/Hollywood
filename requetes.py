@@ -1,6 +1,8 @@
 import json
 import networkx as nx
 import itertools
+import random as rand
+
 # Q1
 def json_vers_nx(chemin):
     graph = nx.Graph()
@@ -93,14 +95,33 @@ def distance3(G, u, v):
         return None
 
 # Q4
-def centralite(G,u):
-    return None
-def centre_hollywood(G):
-    return None
+def centralite(G,u): # Trop longue (~ 5 minutes)
+    def critere(node):
+        distance = distance3(G, u, node)
+        if distance is None:
+            return 0
+        else:
+            return distance
+    return distance3(G, u, max(G.nodes, key = critere))
+
+def centralite2(G, u):
+    ...
+
+def centre_hollywood(G): # Excèssivement longue (en années pour data)
+    def critere(u):
+        return centralite(G, u)
+    return min(G.nodes(), key=critere)
 # Q5
 5
-def eloignement_max(G:nx.Graph):
-    return None
+def eloignement_max(G:nx.Graph): # Pas fini
+    u = rand.choice(list(G.nodes()))
+    def critere(node):
+        distance = distance3(G, u, node)
+        if distance is None:
+            return 0
+        else:
+            return distance
+    return centralite(G, max(G.nodes, key = critere))
 # Bonus
 def centralite_groupe(G,S):
     return None

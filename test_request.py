@@ -6,7 +6,7 @@ import random as rand
 
 # Q1
 # t = time.time()
-G = r.json_vers_nx("./data.txt")
+G = r.json_vers_nx("./data_100.txt")
 # print(nx.number_of_edges(G))
 # print(nx.number_of_nodes(G))
 # print(time.time()-t)
@@ -24,22 +24,35 @@ G = r.json_vers_nx("./data.txt")
     # print(time.time()-t)
 
 # Q3
-nb = 10
-temps_total1 = 0
-temps_total2 = 0
-for i in range(nb):
-    act1 = rand.choice(list(G.nodes()))
-    t = time.time()
-    k = r.distance_naive(G, "Al Pacino", act1)
-    t2 = time.time() - t
-    print((k, t2))
-    temps_total1 += t2
-    t = time.time()
-    k = r.distance3(G, "Al Pacino", act1)
-    t2 = time.time()-t
-    print((k, t2))
-    temps_total2 += t2
-print(">>>>>>>>>>>>>>>>>>>>>>>>>")
-print(temps_total1)
-print(temps_total2)
-print(">>>>>>>>>>>>>>>>>>>>>>>>>")
+# nb = 10
+# temps_total1 = 0
+# temps_total2 = 0
+# for i in range(nb):
+#     act1 = rand.choice(list(G.nodes()))
+#     t = time.time()
+#     k = r.distance_naive(G, "Al Pacino", act1)
+#     t2 = time.time() - t
+#     print((k, t2))
+#     temps_total1 += t2
+#     t = time.time()
+#     k = r.distance3(G, "Al Pacino", act1)
+#     t2 = time.time()-t
+#     print((k, t2))
+#     temps_total2 += t2
+# print(">>>>>>>>>>>>>>>>>>>>>>>>>")
+# print(temps_total1)
+# print(temps_total2)
+# print(">>>>>>>>>>>>>>>>>>>>>>>>>")
+
+# Q4
+t = time.time()
+print(r.centralite(G, "Al Pacino"))
+print(time.time()-t)
+
+t = time.time()
+print(r.centre_hollywood(G))
+print(time.time()-t)
+
+t = time.time()
+print(r.eloignement_max(G))
+print(time.time()-t)

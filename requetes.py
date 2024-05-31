@@ -46,17 +46,20 @@ def est_proche(G,u,v,k=1):
     return v in collaborateurs_proches(G,u,k) # O(N**5)
 
 def distance_naive(G,u,v): # O(N**6)
+    if u == v:
+        return 0
     for k in range(nx.number_of_nodes(G)): # O(N**6)
-        if est_proche(G,u,v,k=1):
+        if est_proche(G,u,v,k):
             return k
     return None
 
 def distance(G,u,v): # O(N**4)
     if u not in G.nodes:
-        print(u,"est un illustre inconnu")
         return None
     collaborateurs = set()
     collaborateurs.add(u)
+    if u == v:
+        return 0
     for k in range(nx.number_of_nodes(G)): # O(N**4)
         collaborateurs_directs = set()
         for c in collaborateurs: # O(N**3)
@@ -65,7 +68,22 @@ def distance(G,u,v): # O(N**4)
                     collaborateurs_directs.add(voisin)
         collaborateurs = collaborateurs.union(collaborateurs_directs)
         if v in collaborateurs:
-            return k
+            return k + 1
+def distance2(G,u,v): # O(N**4)
+    if u not in G.nodes:
+        return None
+    collaborateurs = set()
+    collaborateurs.add(u)
+    distance = 0
+    while v not in collaborateurs:
+        distance += 1
+        collaborateurs_directs = set()
+        for c in collaborateurs:
+            for voisin in G.adj[c]:
+                if voisin not in collaborateurs:
+                    collaborateurs_directs.add(voisin)
+        collaborateurs = collaborateurs.union(collaborateurs_directs)
+    return distance
 # Q4
 def centralite(G,u):
     return None

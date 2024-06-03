@@ -151,10 +151,19 @@ def centre_hollywood(G): # Excèssivement longue (en années pour data)
     return min(G.nodes(), key=critere)
 
 def centre_hollywood2(G):
-    u = rand.choice(list(G.nodes()))
+    a = [1, 3, 4, 5, 7]
+    u = centralite2(G, rand.choice(list(G.nodes())))
+    v = centralite2(G, u[1])
+    index = v[0]//2
+    
+    for acteur1 in collaborateurs_proches(G, u, index):
+        for acteur2 in collaborateurs_proches(G, v, index):
+            if est_proche(G, acteur1, acteur2, k):
+                return  
+
 
 # Q5
-def eloignement_max(G:nx.Graph): # Pas fini
+def eloignement_max(G:nx.Graph):
     u = rand.choice(list(G.nodes()))
     def critere(node):
         distance = distance3(G, u, node)
@@ -165,8 +174,7 @@ def eloignement_max(G:nx.Graph): # Pas fini
     return centralite2(G, max(G.nodes, key = critere))
 
 def eloignement_max2(G):
-    u = rand.choice(list(G.nodes()))
-    return centralite2(G, centralite2(G, u)[1])[0]
+    return centralite2(G, centralite2(G, rand.choice(list(G.nodes())))[1])[0]
 # Bonus
 def centralite_groupe(G,S):
     return None

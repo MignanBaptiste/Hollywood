@@ -56,7 +56,7 @@ def test_Q4(G):
     print(time.time()-t)
 
     t = time.time()
-    # print(r.centre_hollywood(G))
+    print(r.centre_hollywood2(G))
     print(time.time()-t)
 
     t = time.time()

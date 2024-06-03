@@ -15,9 +15,9 @@ def json_vers_nx(chemin):
 # Temps inférieur à 0.05 secondes
 def collaborateurs_communs(graph, u, v):
     commun = set()
-    for v in set(graph.adj[acteur2]):
-        if v in set(graph.adj[acteur1]):
-            commun.add(v)
+    for voisin in set(graph.adj[v]):
+        if voisin in set(graph.adj[u]):
+            commun.add(voisin)
     return commun
 
 #Q3
@@ -94,6 +94,25 @@ def distance3(G, u, v):
     except nx.NetworkXNoPath:
         return None
 
+def distance4(G, u, v): # Ne surtout pas utiliser
+    if u == v:
+        return 0
+    if u not in G.nodes():
+        return None
+    dico = dict()
+    current = [u]
+    i = 0
+    while v not in dico:
+        suivant = set()
+        for node in current:
+            if node not in dico:
+                dico[node] = i
+                for voisin in G.adj[node]:
+                    if voisin not in dico and voisin not in current:
+                        suivant.add(voisin)
+        current = list(suivant)
+    return dico[v]
+
 # Q4
 def centralite(G,u): # Trop longue (~ 5 minutes)
     def critere(node):
@@ -105,14 +124,34 @@ def centralite(G,u): # Trop longue (~ 5 minutes)
     return distance3(G, u, max(G.nodes, key = critere))
 
 def centralite2(G, u):
-    ...
+    if u not in G.nodes:
+        return None
+    collaborateurs = set()
+    collaborateurs.add(u)
+    distance = 0
+    collaborateurs_directs = G.adj[u]
+    while collaborateurs_directs != set():
+        collaborateurs = collaborateurs.union(collaborateurs_directs)
+        distance += 1
+        temp = set()
+        for c in collaborateurs_directs:
+            for voisin in G.adj[c]:
+                if voisin not in collaborateurs:
+                    temp.add(voisin)
+        collaborateurs_directs = temp
+        if collaborateurs_directs == set():
+            return distance
+    return distance
 
 def centre_hollywood(G): # Excèssivement longue (en années pour data)
     def critere(u):
-        return centralite(G, u)
+        return centralite2(G, u)
     return min(G.nodes(), key=critere)
+
+def centre_hollywood2(G):
+    a = [1, 3, 4, 5, 7]
+
 # Q5
-5
 def eloignement_max(G:nx.Graph): # Pas fini
     u = rand.choice(list(G.nodes()))
     def critere(node):
@@ -121,7 +160,10 @@ def eloignement_max(G:nx.Graph): # Pas fini
             return 0
         else:
             return distance
-    return centralite(G, max(G.nodes, key = critere))
+    return centralite2(G, max(G.nodes, key = critere))
+
+def eloignement_max2(G):
+    ...
 # Bonus
 def centralite_groupe(G,S):
     return None

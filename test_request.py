@@ -60,7 +60,7 @@ def test_Q4(G):
     print(time.time()-t)
 
     t = time.time()
-    print(r.eloignement_max(G))
+    print(r.eloignement_max2(G))
     print(time.time()-t)
 
 

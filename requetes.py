@@ -130,6 +130,7 @@ def centralite2(G, u):
     collaborateurs.add(u)
     distance = 0
     collaborateurs_directs = G.adj[u]
+    old = collaborateurs_directs
     while collaborateurs_directs != set():
         collaborateurs = collaborateurs.union(collaborateurs_directs)
         distance += 1
@@ -138,10 +139,11 @@ def centralite2(G, u):
             for voisin in G.adj[c]:
                 if voisin not in collaborateurs:
                     temp.add(voisin)
+        old = collaborateurs_directs
         collaborateurs_directs = temp
         if collaborateurs_directs == set():
-            return distance
-    return distance
+            return (distance, rand.choice(list(old)))
+    return (distance, rand.choice(list(old)))
 
 def centre_hollywood(G): # Excèssivement longue (en années pour data)
     def critere(u):
@@ -149,7 +151,7 @@ def centre_hollywood(G): # Excèssivement longue (en années pour data)
     return min(G.nodes(), key=critere)
 
 def centre_hollywood2(G):
-    a = [1, 3, 4, 5, 7]
+    u = rand.choice(list(G.nodes()))
 
 # Q5
 def eloignement_max(G:nx.Graph): # Pas fini
@@ -163,7 +165,8 @@ def eloignement_max(G:nx.Graph): # Pas fini
     return centralite2(G, max(G.nodes, key = critere))
 
 def eloignement_max2(G):
-    ...
+    u = rand.choice(list(G.nodes()))
+    return centralite2(G, centralite2(G, u)[1])[0]
 # Bonus
 def centralite_groupe(G,S):
     return None

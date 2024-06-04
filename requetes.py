@@ -156,11 +156,13 @@ def centre_hollywood2(G):
     v = centralite2(G, u[1])
     index = v[0]//2
     
-    for acteur1 in collaborateurs_proches(G, u, index):
-        for acteur2 in collaborateurs_proches(G, v, index):
-            if est_proche(G, acteur1, acteur2, k):
-                return  
-
+    for acteur1 in collaborateurs_proches(G, u[1], index):
+        for acteur2 in collaborateurs_proches(G, v[1], index):
+            if est_proche(G, acteur1, acteur2, 1):
+                if centralite2(G, acteur2)[0] < centralite2(G, acteur1)[0]:
+                    return acteur2
+                else:
+                    return acteur1
 
 # Q5
 def eloignement_max(G:nx.Graph):

@@ -41,6 +41,7 @@ def collaborateurs_proches(G,u,k):
                 if voisin not in collaborateurs: # O(N)
                     collaborateurs_directs.add(voisin)
         collaborateurs = collaborateurs.union(collaborateurs_directs)
+    collaborateurs.remove(u)
     return collaborateurs
 # On reconnait un algorithme de parcours DFS car on parcours l'ensemble des sommets voisins d'une distance inférieur à k.
 

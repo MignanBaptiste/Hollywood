@@ -357,9 +357,9 @@ def eloignement_max2(G):
         int: La distance entre les deux acteurs les plus éloignés dans le graphe.
 
     Complexité:
-        O(N**16)
+        O(N**6)
     """
-    return centralite2(G, centralite2(G, rand.choice(list(G.nodes())))[1])[0] # O(N**16)
+    return centralite2(G, centralite2(G, rand.choice(list(G.nodes())))[1])[0] # O(N**6)
 # Bonus
 def centralite_groupe(G,S):
     """Fonction non réalisé, non fonctionnel"""

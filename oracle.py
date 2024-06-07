@@ -85,7 +85,6 @@ bouton_collaborateurs_commun =Button(appli, text="Collaborateurs communs", comma
 bouton_collaborateurs_commun.config(width=taille_bouton)
 bouton_collaborateurs_commun.place(x=50, y=230)
 
-
 bouton_collaborateurs_proches = Button(appli, text="Collaborateurs proches", command=collaborateurs_proches)
 bouton_collaborateurs_proches.config(width=taille_bouton)
 bouton_collaborateurs_proches.place(x=50, y=260)

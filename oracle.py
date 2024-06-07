@@ -4,7 +4,7 @@ import networkx as nx
 import random as rand
 import matplotlib.pyplot as plt
 
-G = r.json_vers_nx("data.txt")
+G = r.json_vers_nx("data_100.txt")
 
 appli = Tk()
 appli.title("SAE Graph")
@@ -35,7 +35,7 @@ def collaborateurs_commun():
                 if acteur in G.adj[acteurs]:
                     graphe.add_edge(acteur, acteurs)
         fig = plt.figure()
-        nx.draw(graphe)
+        nx.draw(graphe,with_labels=True)
         fig.savefig("GrapheCommun.png")
 
 def collaborateurs_proches():
@@ -45,7 +45,7 @@ def collaborateurs_proches():
         for acteur in proches:
             graphe.add_edge(acteur, acteur1.get())
         fig = plt.figure()
-        nx.draw(graphe)
+        nx.draw(graphe,with_labels=True)
         fig.savefig("GrapheProches.png")
 
 def eloignement_max():
@@ -84,7 +84,6 @@ distance_collaborateur.place(x=50, y=200)
 bouton_collaborateurs_commun =Button(appli, text="Collaborateurs communs", command=collaborateurs_commun)
 bouton_collaborateurs_commun.config(width=taille_bouton)
 bouton_collaborateurs_commun.place(x=50, y=230)
-
 
 bouton_collaborateurs_proches = Button(appli, text="Collaborateurs proches", command=collaborateurs_proches)
 bouton_collaborateurs_proches.config(width=taille_bouton)

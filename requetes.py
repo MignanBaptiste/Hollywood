@@ -5,6 +5,14 @@ import random as rand
 
 # Q1
 def json_vers_nx(chemin):
+    """_summary_
+
+    Args:
+        chemin (String): Charge un fichier de liste
+
+    Returns:
+        _type_: _description_
+    """
     graph = nx.Graph()
     with open(chemin, "r") as file:
         for ligne in file:
@@ -15,8 +23,8 @@ def json_vers_nx(chemin):
 # Temps inférieur à 0.05 secondes
 def collaborateurs_communs(graph, u, v):
     commun = set()
-    for voisin in set(graph.adj[v]):
-        if voisin in set(graph.adj[u]):
+    for voisin in graph.adj[v]:
+        if voisin in graph.adj[u]:
             commun.add(voisin)
     return commun
 

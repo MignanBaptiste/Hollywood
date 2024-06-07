@@ -4,7 +4,7 @@ import networkx as nx
 import random as rand
 import matplotlib.pyplot as plt
 
-G = r.json_vers_nx("data.txt")
+G = r.json_vers_nx("data_100.txt")
 
 appli = Tk()
 appli.title("SAE Graph")
@@ -35,7 +35,7 @@ def collaborateurs_commun():
                 if acteur in G.adj[acteurs]:
                     graphe.add_edge(acteur, acteurs)
         fig = plt.figure()
-        nx.draw(graphe)
+        nx.draw(graphe,with_labels=True)
         fig.savefig("GrapheCommun.png")
 
 def collaborateurs_proches():
@@ -45,7 +45,7 @@ def collaborateurs_proches():
         for acteur in proches:
             graphe.add_edge(acteur, acteur1.get())
         fig = plt.figure()
-        nx.draw(graphe)
+        nx.draw(graphe,with_labels=True)
         fig.savefig("GrapheProches.png")
 
 def eloignement_max():

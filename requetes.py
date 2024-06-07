@@ -123,7 +123,7 @@ def distance(G,u,v):
         int: Distance entre l'acteur u et l'acteur v.
     
     Complexité:
-        O(N**4)
+        O(N**3)
     """
     if u not in G.nodes:
         return None
@@ -135,7 +135,7 @@ def distance(G,u,v):
         collaborateurs_directs = set()
         for c in collaborateurs: # O(N)
             for voisin in G.adj[c]: # O(N)
-                if voisin not in collaborateurs: # O(N)
+                if voisin not in collaborateurs: # O(1)
                     collaborateurs_directs.add(voisin)
         collaborateurs = collaborateurs.union(collaborateurs_directs)
         if v in collaborateurs:
@@ -154,7 +154,7 @@ def distance2(G,u,v):
         int: Distance entre l'acteur u et l'acteur v.
     
     Complexité:
-        O(N**4)
+        O(N**3)
     """
     if u not in G.nodes or v not in G.nodes:
         return None
@@ -166,7 +166,7 @@ def distance2(G,u,v):
         collaborateurs_directs = set()
         for c in collaborateurs: # O(N)
             for voisin in G.adj[c]: # O(N)
-                if voisin not in collaborateurs: # O(N)
+                if voisin not in collaborateurs: # O(1)
                     collaborateurs_directs.add(voisin)
         collaborateurs = collaborateurs.union(collaborateurs_directs)
     return distance
@@ -204,7 +204,7 @@ def distance4(G, u, v): # Ne surtout pas utiliser
         int: Distance entre l'acteur u et l'acteur v.
     
     Complexité:
-        O(N**5)
+        O(N**4)
     """
     if u == v:
         return 0
@@ -219,7 +219,7 @@ def distance4(G, u, v): # Ne surtout pas utiliser
             if node not in dico: # O(1)
                 dico[node] = i
                 for voisin in G.adj[node]: # O(N)
-                    if voisin not in dico and voisin not in current:  # O(N**2)
+                    if voisin not in dico and voisin not in current:  # O(N)
                         suivant.add(voisin)
         current = list(suivant)
     return dico[v]
@@ -258,7 +258,7 @@ def centralite2(G, u):
         tuple(int, acteur): Tuple de distance entre l'acteur u et l'acteur le plus éloigné du graphe.
     
     Complexité:
-        O(N**4)
+        O(N**3)
     """
     if u not in G.nodes:
         return None
@@ -273,7 +273,7 @@ def centralite2(G, u):
         temp = set()
         for c in collaborateurs_directs: # O(N)
             for voisin in G.adj[c]: # O(N)
-                if voisin not in collaborateurs: # O(N)
+                if voisin not in collaborateurs: # O(1)
                     temp.add(voisin)
         old = collaborateurs_directs
         collaborateurs_directs = temp
@@ -292,10 +292,10 @@ def centre_hollywood(G): # Excèssivement longue (en années pour data)
         String: L'acteur le plus proche du centre du graphe.
     
     Complexité:
-        O(N**5)
+        O(N**4)
     """
     def critere(u):
-        return centralite2(G, u) # O(N**4)
+        return centralite2(G, u) # O(N**3)
     return min(G.nodes(), key=critere) # O(N)
 
 def centre_hollywood2(G):
@@ -308,16 +308,16 @@ def centre_hollywood2(G):
         String: L'acteur/ un des acteurs le plus proche du centre du graphe.
 
     Complexité:
-        O(N**72) Absolument pas représentatif du temps pris par la fonction.
+        O(N**9) Absolument pas représentatif du temps réel pris par la fonction.
     """
-    u = centralite2(G, rand.choice(list(G.nodes()))) # O(N**4)
-    v = centralite2(G, u[1]) # O(N**4)
+    u = centralite2(G, rand.choice(list(G.nodes()))) # O(N**3)
+    v = centralite2(G, u[1]) # O(N**3)
     index = v[0]//2
     
     for acteur1 in collaborateurs_proches(G, u[1], index): # O(N)
         for acteur2 in collaborateurs_proches(G, v[1], index): # O(N)
             if est_proche(G, acteur1, acteur2, 1): # O(N**4)
-                if centralite2(G, acteur2)[0] < centralite2(G, acteur1)[0]: # O(N**4)
+                if centralite2(G, acteur2)[0] < centralite2(G, acteur1)[0]: # O(N**3)
                     return acteur2
                 else:
                     return acteur1
@@ -357,9 +357,9 @@ def eloignement_max2(G):
         int: La distance entre les deux acteurs les plus éloignés dans le graphe.
 
     Complexité:
-        O(N**16)
+        O(N**6)
     """
-    return centralite2(G, centralite2(G, rand.choice(list(G.nodes())))[1])[0] # O(N**16)
+    return centralite2(G, centralite2(G, rand.choice(list(G.nodes())))[1])[0] # O(N**6)
 # Bonus
 def centralite_groupe(G,S):
     """Fonction non réalisé, non fonctionnel"""

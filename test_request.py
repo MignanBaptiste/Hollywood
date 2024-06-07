@@ -6,6 +6,7 @@ import random as rand
 # Q1
 def test_Q1(chemin):
     t = time.time()
+    print("Chargement des données")
     G = r.json_vers_nx(chemin)
     print(nx.number_of_edges(G))
     print(nx.number_of_nodes(G))
@@ -19,6 +20,7 @@ def test_Q2(G):
         t = time.time()
         act1 = rand.choice(list(G.nodes()))
         act2 = rand.choice(list(G.nodes()))
+        print("Collaborateurs communs")
         print(act1 +"\n" + act2)
         res = r.collaborateurs_communs(G, act1, act2)
         print(res)
@@ -34,11 +36,13 @@ def test_Q3(G):
     for i in range(nb):
         act1 = rand.choice(list(G.nodes()))
         t = time.time()
+        print("Distance Naive")
         k = r.distance_naive(G, "Al Pacino", act1)
         t2 = time.time() - t
         print((k, t2))
         temps_total1 += t2
         t = time.time()
+        print("Distance")
         k = r.distance3(G, "Al Pacino", act1)
         t2 = time.time()-t
         print((k, t2))
@@ -51,14 +55,17 @@ def test_Q3(G):
 # Q4
 def test_Q4(G):
     t = time.time()
+    print("Centralité")
     print(r.centralite2(G, "Al Pacino"))
     print(time.time()-t)
 
     t = time.time()
+    print("Centre Hollywood")
     print(r.centre_hollywood2(G))
     print(time.time()-t)
 
     t = time.time()
+    print("Eloignement Max")
     print(r.eloignement_max2(G))
     print(time.time()-t)
 
